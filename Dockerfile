@@ -79,7 +79,7 @@ RUN curl -fsSL https://storage.googleapis.com/golang/go$GO_VERSION.$GOOS-$GOARCH
 
 # configure Theia
 ENV SHELL=/bin/bash \
-    THEIA_DEFAULT_PLUGINS=local-dir:/home/theia/plugins
+    THEIA_DEFAULT_PLUGINS=local-dir:/home/theia/browser-app/plugins
 # configure user Go packages
 ENV GOPATH=/home/project/go \
     PATH=$GOPATH/bin:$PATH
