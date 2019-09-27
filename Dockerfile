@@ -6,9 +6,15 @@ WORKDIR /home/theia
 # custom Bash prompt
 RUN { echo && echo "PS1='\[\e]0;\u \w\a\]\[\033[01;32m\]\u\[\033[00m\] \[\033[01;34m\]\w\[\033[00m\] \\\$ '" ; } >> .bashrc
 
-ADD $version.package.json ./package.json
+COPY package.json lerna.json /home/theia/
+RUN mkdir browser-app && \
+    mkdir -p theia-xbvr-extension/src/browser
+COPY browser-app/* browser-app/
+COPY theia-xbvr-extension/* theia-xbvr-extension/
+COPY theia-xbvr-extension/src/browser/* theia-xbvr-extension/src/browser/
+
 RUN yarn --pure-lockfile && \
-    NODE_OPTIONS="--max_old_space_size=4096" yarn theia build && \
+    NODE_OPTIONS="--max_old_space_size=4096" yarn rebuild:browser && \
     yarn --production && \
     yarn autoclean --init && \
     echo *.ts >> .yarnclean && \
@@ -16,6 +22,9 @@ RUN yarn --pure-lockfile && \
     echo *.spec.* >> .yarnclean && \
     yarn autoclean --force && \
     yarn cache clean
+
+# Temporary fix for missing node_modules
+RUN ln -s \@theia/core/node_modules/yargs node_modules/yargs
 
 # See : https://github.com/theia-ide/theia-apps/issues/34
 #RUN adduser --disabled-password --gecos '' theia && \
@@ -77,4 +86,4 @@ ENV GOPATH=/home/project/go \
 
 EXPOSE 3000
 EXPOSE 9999
-ENTRYPOINT [ "node", "/home/theia/src-gen/backend/main.js", "/home/project", "--hostname=0.0.0.0" ]
+ENTRYPOINT [ "node", "/home/theia/browser-app/src-gen/backend/main.js", "/home/project", "--hostname=0.0.0.0" ]
