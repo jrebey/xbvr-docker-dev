@@ -96,3 +96,11 @@ public/
 .dynamodb/
 
 # End of https://www.gitignore.io/api/node
+
+browser-app/lib/
+browser-app/node_modules/
+browser-app/plugins/
+browser-app/src-gen/
+browser-app/webpack.config.js
+theia-xbvr-extension/lib/
+theia-xbvr-extension/node_modules/
