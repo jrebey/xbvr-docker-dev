@@ -82,6 +82,7 @@ ENV SHELL=/bin/bash \
     THEIA_DEFAULT_PLUGINS=local-dir:/home/theia/browser-app/plugins
 # configure user Go packages
 ENV GOPATH=/home/project/go \
+    GO111MODULE=on \
     PATH=$GOPATH/bin:$PATH
 
 EXPOSE 3000
