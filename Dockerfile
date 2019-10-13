@@ -25,4 +25,9 @@ RUN curl -fsSL https://storage.googleapis.com/golang/go$GO_VERSION.linux-amd64.t
         sourcegraph.com/sqs/goreturns \
         github.com/UnnoTed/fileb0x
 
+RUN mkdir -p /workspace/xbvr/bin
+ADD build_xbvr.sh /workspace/xbvr/bin
+RUN chmod +x /workspace/xbvr/build_xbvr.sh
+ENV PATH=/workspace/xbvr/bin:$PATH
+
 CMD build_xbvr.sh
