@@ -30,4 +30,5 @@ ADD build_xbvr.sh /workspace/xbvr/bin
 RUN chmod +x /workspace/xbvr/bin/build_xbvr.sh
 ENV PATH=/workspace/xbvr/bin:$PATH
 
+WORKDIR /workspace/xbvr
 CMD build_xbvr.sh
